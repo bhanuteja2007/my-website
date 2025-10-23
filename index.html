@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhanu Teja Modem | Artificial Intelligence & Machine Learning Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /* Custom Tailwind Configuration */
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#4f46e5', /* Indigo 600 */
+                        'primary-dark': '#4338ca', /* Indigo 700 */
+                        'background': '#0f172a', /* Slate 900 */
+                        'card': '#1e293b', /* Slate 800 */
+                        'text-light': '#f1f5f9', /* Slate 100 */
+                        'text-muted': '#94a3b8', /* Slate 400 */
+                    }
+                }
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* --- New Keyframe Animations for Epic Feel --- */
+
+        /* Pulsating Shadow for Cards (Breathing effect - slower for atmosphere) */
+        @keyframes pulse-shadow {
+            0% { box-shadow: 0 0 10px rgba(79, 70, 229, 0.05); }
+            50% { box-shadow: 0 0 20px rgba(79, 70, 229, 0.2); }
+            100% { box-shadow: 0 0 10px rgba(79, 70, 229, 0.05); }
+        }
+
+        /* Card Shimmer on Hover - high-tech swipe effect */
+        @keyframes shimmer {
+            0% { transform: scaleY(1.5) translateX(-100%); }
+            100% { transform: scaleY(1.5) translateX(200%); }
+        }
+
+        /* Flickering Neon Text for Hero Headline (More dramatic) */
+        @keyframes text-flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow:
+                    0 0 4px theme('colors.primary'),
+                    0 0 10px theme('colors.primary'),
+                    0 0 20px theme('colors.primary-dark'),
+                    0 0 30px theme('colors.primary-dark');
+                opacity: 1;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+                opacity: 0.8;
+            }
+        }
+
+
+        /* --- Custom Styling & Applications --- */
+
+        /* Applying the breathing animation to relevant cards (Slower, atmospheric effect) */
+        .card-breathing-shadow {
+            animation: pulse-shadow 8s infinite ease-in-out;
+        }
+
+        /* Applying the epic text glow to the main heading */
+        .epic-glow {
+            animation: text-flicker 2.5s infinite alternate;
+        }
+
+        /* Gradient for Hero Section */
+        .hero-gradient {
+            background-image: radial-gradient(at 0% 0%, var(--colors-primary) 0px, transparent 20%),
+                              radial-gradient(at 100% 100%, #1e293b 0px, transparent 30%);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        /* Styling for the section headers and dividers */
+        .section-heading::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: theme('colors.primary');
+            margin-top: 8px;
+            border-radius: 2px;
+        }
+
+        /* Tilt Effect + Shimmer Card Setup */
+        .tilt-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            position: relative; /* Needed for pseudo-element positioning */
+            overflow: hidden; /* Important to contain the shimmer */
+        }
+        .tilt-card:hover {
+            transform: perspective(1000px) rotateX(1deg) rotateY(1deg) scale(1.02);
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.4); 
+        }
+
+        /* Card Shimmer Pseudo-Element */
+        .tilt-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%; /* Width of the shimmer bar */
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: scaleY(1.5) translateX(-100%) skewX(-20deg);
+            pointer-events: none; /* Ignore mouse events */
+            transition: transform 0.3s;
+        }
+        .tilt-card:hover::before {
+            animation: shimmer 1s ease-in-out;
+        }
+
+        /* Custom scrollbar style for aesthetics (optional) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4f46e5;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4338ca;
+        }
+
+        /* ----------------------------------------------------- */
+        /* --- Contact Form Styling Fixes (Ensured High Contrast) --- */
+        /* ----------------------------------------------------- */
+        .contact-submit-btn {
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.5); 
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+        .contact-submit-btn:hover {
+            background-color: theme('colors.primary-dark');
+            box-shadow: 0 12px 25px rgba(79, 70, 229, 0.8);
+            transform: scale(1.02);
+        }
+
+        .contact-input::placeholder {
+            color: theme('colors.text-light');
+            opacity: 0.7; 
+        }
+
+        /* ----------------------------------------------------- */
+        /* --- Custom Button Style for Hero (Translucent) --- */
+        /* ----------------------------------------------------- */
+        .hero-button {
+            border: 2px solid transparent;
+            transition: all 0.3s ease-in-out;
+        }
+        .hero-button.primary-fill {
+            @apply text-gray-900 bg-primary hover:bg-primary-dark shadow-2xl;
+        }
+        .hero-button.secondary-outline {
+            @apply text-primary bg-transparent border-primary/50 shadow-xl;
+        }
+        .hero-button.secondary-outline:hover {
+            @apply border-primary bg-primary/20 text-text-light;
+        }
+
+        
+        /* Tailwind Component Styling for Reusability */
+        .nav-link {
+            @apply text-text-muted hover:text-primary px-3 py-2 rounded-lg text-sm font-medium transition duration-300;
+        }
+        .mobile-nav-link {
+            @apply block px-3 py-2 rounded-md text-base font-medium text-text-light hover:bg-card hover:text-primary transition duration-300;
+        }
+        /* Applying breathing shadow and shimmer to project cards */
+        .project-card {
+            @apply bg-card p-6 rounded-xl shadow-2xl border border-card hover:border-primary-dark transform transition duration-500 tilt-card card-breathing-shadow; 
+        }
+        .skill-badge {
+            @apply px-4 py-2 text-sm font-medium text-white rounded-full shadow-lg transform hover:scale-[1.03] transition duration-300;
+        }
+        .tech-tag {
+            @apply text-xs font-medium bg-primary/20 text-primary px-3 py-1 rounded-full;
+        }
+        .project-link {
+            @apply inline-flex items-center text-sm font-medium text-text-light hover:text-primary transition duration-300;
+        }
+        /* Applying breathing shadow to certification items */
+        .cert-item {
+            @apply p-3 bg-primary/10 rounded-lg border-l-4 border-primary/50 hover:bg-primary/20 transition duration-300 card-breathing-shadow; 
+        }
+        .achievement-box {
+            @apply bg-card p-6 rounded-xl shadow-xl flex flex-col items-start transition duration-300 hover:bg-primary/10 hover:shadow-primary/50 tilt-card; 
+        }
+        .insight-card {
+            @apply bg-card p-5 rounded-xl border border-card hover:border-primary-dark transform hover:-translate-y-0.5 transition duration-300;
+        }
+        .contact-input {
+            @apply w-full p-3 rounded-lg bg-background border border-card focus:ring-primary focus:border-primary text-text-light transition duration-300;
+        }
+        .social-icon {
+            @apply text-text-muted hover:text-primary transition duration-300 transform hover:scale-110;
+        }
+        .footer-social-icon {
+            @apply text-text-muted hover:text-primary transition duration-300;
+        }
+    </style>
+</head>
+
+<body class="bg-background text-text-light font-sans">
+
+    <nav id="navbar" class="sticky top-0 z-50 bg-card/90 backdrop-blur-sm shadow-lg border-b border-primary-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#home" class="flex-shrink-0 text-2xl font-bold text-primary hover:text-text-light transition duration-300">
+                        BHANU'S. Portfolio
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#about" class="nav-link">About Me</a>
+                        <a href="#skills" class="nav-link">Skills</a>
+                        <a href="#projects" class="nav-link">Projects</a>
+                        <a href="#education" class="nav-link">Education</a>
+                        <a href="#achievements" class="nav-link">Awards</a>
+                        <a href="#contact" class="nav-link bg-primary hover:bg-primary-dark text-white px-3 py-2 rounded-lg text-sm font-medium transition duration-300">Contact</a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-text-light hover:text-white hover:bg-primary/50 focus:outline-none transition duration-300" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <i data-lucide="menu" class="block h-6 w-6"></i>
+                        <i data-lucide="x" class="hidden h-6 w-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" class="mobile-nav-link">About Me</a>
+                <a href="#skills" class="mobile-nav-link">Skills</a>
+                <a href="#projects" class="mobile-nav-link">Projects</a>
+                <a href="#education" class="mobile-nav-link">Education</a>
+                <a href="#achievements" class="mobile-nav-link">Awards</a>
+                <a href="#contact" class="mobile-nav-link bg-primary text-white">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <section id="home" class="min-h-screen flex items-center justify-center pt-16 md:pt-0 hero-gradient">
+            <div class="text-center py-20" data-aos="fade-up" data-aos-duration="1000">
+                <p class="text-2xl sm:text-3xl text-primary font-semibold mb-4 tracking-wider">Hi, I'm Bhanu Teja Modem</p>
+                <!-- ENHANCED EPIC GLOW ANIMATION HERE -->
+                <h1 class="text-5xl sm:text-7xl lg:text-8xl font-extrabold leading-tight text-text-light mb-6 epic-glow">
+                    Engineering The Next Generation of AI.
+                </h1>
+                <p class="text-xl sm:text-2xl text-text-muted max-w-4xl mx-auto mb-10">
+                    Learning and Experimenting With AI to build transparent and Meaningful Solutions for real-world problems.
+                </p>
+                <div class="flex justify-center space-x-6">
+                    <!-- Updated Button with custom class -->
+                    <a href="#projects" class="inline-flex items-center px-8 py-3 text-base font-medium rounded-lg transition duration-300 transform hover:scale-[1.06] hero-button primary-fill">
+                        <i data-lucide="folder-open" class="w-5 h-5 mr-2"></i> View My Work
+                    </a>
+                    <!-- Updated Button with custom class -->
+                    <a href="https://docs.google.com/document/d/198S-Zu7cNXYRGjc-GEdWvF8HqfqUzfjq/export?format=pdf" download class="inline-flex items-center px-8 py-3 text-base font-medium rounded-lg transition duration-300 transform hover:scale-[1.06] hero-button secondary-outline">
+                        <i data-lucide="download" class="w-5 h-5 mr-2"></i> Download Resume
+                    </a>
+                </div>
+                <div class="mt-16 text-primary/50">
+                    <i data-lucide="chevron-down" class="w-10 h-10 mx-auto animate-bounce"></i>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 border-t border-card">
+            <h2 class="section-heading text-4xl font-bold mb-10 text-text-light" data-aos="fade-right">About Me</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-center">
+                <div class="md:col-span-2 space-y-6 text-text-muted text-lg" data-aos="fade-up" data-aos-delay="200">
+                    <p>I am Bhanu Teja Modem, a dedicated B-Tech student in Computer Science Engineering with a deep passion for Artificial Intelligence and Machine Learning. My journey began with a curiosity about how complex systems could be optimized, leading me to specialize in Python, AI, Deep Learning, GenAI, and Computer Vision, complemented by a strong interest in Data Visualization.</p>
+                    
+                    <p>Beyond the algorithms, I am driven by the impact technology can have on society. I am actively involved in research on a **Multilingual XAI Framework for a Universal Public Grievance Redressal System**. This work focuses on making AI-driven solutions transparent and universally accessible.</p>
+
+                    <div class="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-primary font-medium" data-aos="fade-up" data-aos-delay="400">
+                        <p class="flex items-center"><i data-lucide="check-circle" class="w-5 h-5 mr-2"></i> Goal-Oriented Problem Solver</p>
+                        <p class="flex items-center"><i data-lucide="check-circle" class="w-5 h-5 mr-2"></i> Strong Advocate for AI Ethics</p>
+                        <p class="flex items-center"><i data-lucide="check-circle" class="w-5 h-5 mr-2"></i> Skilled in Machine Learning & Data Science</p>
+                        <p class="flex items-center"><i data-lucide="check-circle" class="w-5 h-5 mr-2"></i> Constant Learner Exploring Emerging AI Trends</p>
+                    </div>
+                </div>
+                <div class="md:col-span-1 flex justify-center" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="w-64 h-64 bg-primary/20 rounded-full shadow-2xl border-4 border-primary/50 overflow-hidden transform hover:scale-105 transition duration-500">
+                        <img 
+                            src="https://media.licdn.com/dms/image/v2/D4E03AQHaMUVUZw6iow/profile-displayphoto-scale_200_200/B4EZoFyc.pKsAY-/0/1761033704345?e=1762992000&v=beta&t=4oOmnioBIoiovXJwBv_7fFHR0MDp71qKPMJSYDSHEwo"
+                            alt="Bhanu Teja Modem Professional Photo" 
+                            class="w-full h-full object-cover"
+                            onerror="this.onerror=null;this.src='https://placehold.co/256x256/1e293b/94a3b8?text=Image+Unavailable';"
+                        >
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-20 border-t border-card">
+            <h2 class="section-heading text-4xl font-bold mb-10 text-text-light" data-aos="fade-right">Skills & Tech Stack</h2>
+            <div class="space-y-12">
+                
+                <div data-aos="fade-up">
+                    <h3 class="text-2xl font-semibold mb-4 text-primary flex items-center">
+                        <i data-lucide="brain" class="w-6 h-6 mr-2"></i> Core AI & Deep Learning
+                    </h3>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-badge bg-red-800">PyTorch</span>
+                        <span class="skill-badge bg-yellow-600">TensorFlow/Keras</span>
+                        <span class="skill-badge bg-amber-600">Hugging Face (Ecosystem)</span>
+                        <span class="skill-badge bg-green-600">LLM Development (RAG)</span>
+                        <span class="skill-badge bg-purple-600">Computer Vision (YOLO/OpenCV)</span>
+                        <span class="skill-badge bg-pink-600">GANs & VAEs</span>
+                        <span class="skill-badge bg-cyan-800">Reinforcement Learning (RL)</span>
+                        <span class="skill-badge bg-indigo-600">NLP & Transformers</span>
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-2xl font-semibold mb-4 text-primary flex items-center">
+                        <i data-lucide="cloud" class="w-6 h-6 mr-2"></i> MLOps & Production
+                    </h3>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-badge bg-orange-600">MLflow</span>
+                        <span class="skill-badge bg-sky-600">Docker</span>
+                        <span class="skill-badge bg-gray-600">Kubernetes (Basic)</span>
+                        <span class="skill-badge bg-yellow-400 text-gray-900">GCP/Vertex AI</span>
+                        <span class="skill-badge bg-red-700">AWS SageMaker</span>
+                        <span class="skill-badge bg-lime-600">Vector Databases (Pinecone/Chroma)</span>
+                        <span class="skill-badge bg-teal-600">FastAPI/Gradio</span>
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="text-2xl font-semibold mb-4 text-primary flex items-center">
+                        <i data-lucide="bar-chart-2" class="w-6 h-6 mr-2"></i> Data Science, BI & XAI
+                    </h3>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="skill-badge bg-red-500">Machine Learning</span>
+                        <span class="skill-badge bg-blue-400 text-gray-900">Explainable AI (SHAP, LIME)</span>
+                        <span class="skill-badge bg-purple-400 text-gray-900">Scikit-learn</span>
+                        
+                        <span class="skill-badge bg-green-700">Python</span>
+                        <span class="skill-badge bg-sky-500">Pandas</span>
+                        <span class="skill-badge bg-blue-600">NumPy</span>
+                        <span class="skill-badge bg-indigo-600">Seaborn</span>
+                        <span class="skill-badge bg-cyan-600">Plotly/Dash</span>
+                        
+                        <span class="skill-badge bg-indigo-400 text-gray-900">Tableau</span>
+                        <span class="skill-badge bg-yellow-300 text-gray-900">Microsoft Power BI</span>
+                        <span class="skill-badge bg-green-500">Microsoft Excel</span>
+                        
+                        <span class="skill-badge bg-red-500">SQL/NoSQL</span>
+                        <span class="skill-badge bg-zinc-600">Git/GitHub</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-20 border-t border-card">
+            <h2 class="section-heading text-4xl font-bold mb-10 text-text-light" data-aos="fade-right">Featured Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center mb-3 text-primary"><i data-lucide="activity" class="w-6 h-6 mr-2"></i> ML Classification</div>
+                    <h3 class="text-2xl font-semibold mb-2 text-text-light">Stress Level Identifier</h3>
+                    <p class="text-text-muted mb-4">Developed a supervised machine learning model (Random Forest / SVM) to classify psychological stress levels based on physiological and behavioral data inputs. </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tech-tag">Scikit-learn</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Pandas</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/bhanuteja2007/Stress-level-identifier-using-ML.git" target="_blank" class="project-link">
+                            <i data-lucide="github" class="w-5 h-5 mr-1"></i> GitHub
+                        </a>
+                        <a href="#" class="project-link border-primary bg-primary/20 text-primary">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center mb-3 text-primary"><i data-lucide="leaf" class="w-6 h-6 mr-2"></i> Data & BI</div>
+                    <h3 class="text-2xl font-semibold mb-2 text-text-light">Green Watt Energy Solutions Dashboard</h3>
+                    <p class="text-text-muted mb-4">Created a comprehensive Business Intelligence dashboard using Power BI to visualize and analyze renewable energy consumption patterns for operational optimization and impact reporting.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tech-tag">Power BI</span>
+                        <span class="tech-tag">SQL</span>
+                        <span class="tech-tag">Pandas</span>
+                        <span class="tech-tag">Data Visualization</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/bhanuteja2007/GreenWatt-Energy-Solutions-.git" target="_blank" class="project-link">
+                            <i data-lucide="github" class="w-5 h-5 mr-1"></i> GitHub
+                        </a>
+                        <a href="https://docs.google.com/document/d/15r2ODjjQGDl0erST2r8e7GRke0GjKPgw/edit" target="_blank" class="project-link border-primary bg-primary/20 text-primary">
+                            <i data-lucide="bar-chart-2" class="w-5 h-5 mr-1"></i> View Report
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center mb-3 text-primary"><i data-lucide="map-pin" class="w-6 h-6 mr-2"></i> Real-time Geo-Spatial</div>
+                    <h3 class="text-2xl font-semibold mb-2 text-text-light">Real-time Public Transport Tracking</h3>
+                    <p class="text-text-muted mb-4">Engineered an IoT and web application solution to consume real-time GPS data, providing commuters with accurate, live location tracking of public transport vehicles.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">GeoJSON</span>
+                        <span class="tech-tag">Leaflet JS</span>
+                        <span class="tech-tag">Redis</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/bhanuteja2007/Real-time-public-Transport-tracking-system-.git" target="_blank" class="project-link">
+                            <i data-lucide="github" class="w-5 h-5 mr-1"></i> GitHub
+                        </a>
+                        <a href="#" class="project-link border-primary bg-primary/20 text-primary">
+                           </a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="flex items-center mb-3 text-primary"><i data-lucide="clock" class="w-6 h-6 mr-2"></i> Time Series Prediction</div>
+                    <h3 class="text-2xl font-semibold mb-2 text-text-light">Transport Time Prediction Model</h3>
+                    <p class="text-text-muted mb-4">Developed a robust time series model (LSTM/Prophet) to predict public transport journey durations, factoring in variables like traffic, weather, and time of day to enhance route planning.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tech-tag">LSTM (PyTorch)</span>
+                        <span class="tech-tag">Pandas</span>
+                        <span class="tech-tag">Streamlit</span>
+                        <span class="tech-tag">Forecasting</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/bhanuteja2007/Transport-Time-prediction.git" target="_blank" class="project-link">
+                            <i data-lucide="github" class="w-5 h-5 mr-1"></i> GitHub
+                        </a>
+                        <a href="#" class="project-link border-primary bg-primary/20 text-primary">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="flex items-center mb-3 text-primary"><i data-lucide="sparkles" class="w-6 h-6 mr-2"></i> GenAI & NLP</div>
+                    <h3 class="text-2xl font-semibold mb-2 text-text-light">AI Text Generator & Sentiment Monitor</h3>
+                    <p class="text-text-muted mb-4">Created an integrated system where generated text is immediately passed through a secondary model for sentiment analysis, acting as a moderation and quality control layer for GenAI outputs.</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tech-tag">Hugging Face</span>
+                        <span class="tech-tag">Transformers</span>
+                        <span class="tech-tag">Sentiment Analysis</span>
+                        <span class="tech-tag">Gradio</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/bhanuteja2007/ai-text-generator-for-sentiment-analysis.git" target="_blank" class="project-link">
+                            <i data-lucide="github" class="w-5 h-5 mr-1"></i> GitHub
+                        </a>
+                        <a href="#" class="project-link border-primary bg-primary/20 text-primary">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="py-20 border-t border-card">
+            <h2 class="section-heading text-4xl font-bold mb-10 text-text-light" data-aos="fade-right">Education & Certifications</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="bg-card p-6 rounded-xl shadow-2xl space-y-4" data-aos="fade-right" data-aos-delay="100">
+                    <h3 class="text-2xl font-semibold text-primary flex items-center mb-4">
+                        <i data-lucide="graduation-cap" class="w-6 h-6 mr-3"></i> Academic History & Research
+                    </h3>
+                    
+                    <div class="border-l-4 border-primary pl-4 py-2">
+                        <p class="text-lg font-bold text-text-light">BTech in Computer Science Engineering</p>
+                        <p class="text-primary font-medium">Vel Tech Rangarajan Dr. Sagunthala R&D Institute of Science and Technology, Chennai, Tamil Nadu</p>
+                        <p class="text-text-muted text-sm">2024 – 2028 (Expected)</p>
+                        <p class="text-text-muted text-sm mt-1">GPA: 9.36/10.0</p>
+                    </div>
+
+                    <div class="border-l-4 border-yellow-500 pl-4 py-2 mt-4 bg-yellow-500/10 rounded-r-lg hover:shadow-lg transition duration-300">
+                        <p class="text-lg font-bold text-text-light flex items-center mb-2"><i data-lucide="flask-conical" class="w-5 h-5 mr-2 text-yellow-400"></i> Featured Research</p>
+                        <p class="text-primary font-medium">Multilingual XAI Framework for Universal Public Grievance Redressal System</p>
+                        <p class="text-text-muted text-sm mt-1">Developing explainable AI (XAI) tools to ensure fairness and transparency in public sector decision-making across diverse linguistic regions.</p>
+                        <a href="https://github.com/bhanuteja2007/multilingual-xai" target="_blank" class="inline-flex items-center text-sm font-medium text-yellow-400 hover:text-yellow-300 mt-2 transition duration-300">
+                            <i data-lucide="file-text" class="w-4 h-4 mr-1"></i> View Research Code/Paper
+                        </a>
+                    </div>
+
+                    <div class="border-l-4 border-primary/50 pl-4 py-2">
+                        <p class="text-lg font-bold text-text-light">Relevant Coursework</p>
+                        <ul class="list-disc list-inside text-text-muted text-sm ml-2 space-y-1">
+                             <li> Machine Learning & Deep Learning</li>
+                            <li>Data Structures and Algorithms (DSA)</li>
+                            <li>Generative AI & LLM Architectures</li>
+                            <li>Database Management System</li>
+                            <li>Computer Vision & Image Processing</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-card p-6 rounded-xl shadow-2xl space-y-4" data-aos="fade-left" data-aos-delay="200">
+                    <h3 class="text-2xl font-semibold text-primary flex items-center mb-4">
+                        <i data-lucide="award" class="w-6 h-6 mr-3"></i> Key Certifications
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="cert-item">
+                            <p class="font-bold">AI,Machine Learning</p>
+                            <p class="text-text-muted text-sm">Ediglobe(2025)</p>
+                        </li> 
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section id="insights" class="py-20 border-t border-card">
+            <h2 class="section-heading text-4xl font-bold mb-10 text-text-light" data-aos="fade-right">Insights & Writing</h2>
+            <p class="text-text-muted text-lg mb-8" data-aos="fade-up">Sharing thoughts on deep learning architectures, ethical AI, and emerging trends in Generative AI. These articles reflect my values and continuous learning process.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="insight-card" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-semibold text-primary mb-2">The Explainability Crisis: Why XAI is Essential for Trust in LLMs</h3>
+                    <p class="text-text-muted text-sm mb-3">A deep dive into using post-hoc explainability techniques to audit black-box transformer models.</p>
+                    <a href="https://www.ibm.com/think/topics/explainable-ai" target="_blank" class="text-primary hover:text-primary-dark text-sm font-medium flex items-center">Read More <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></a>
+                </div>
+                <div class="insight-card" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl font-semibold text-primary mb-2">A Practitioner's Guide to Fine-Tuning a Transformer Model</h3>
+                    <p class="text-text-muted text-sm mb-3">A step-by-step tutorial covering data preparation, infrastructure setup, and performance tuning for a custom fine-tuning job.</p>
+                    <a href="https://huggingface.co/docs/transformers/en/training" target="_blank" class="text-primary hover:text-primary-dark text-sm font-medium flex items-center">Read More <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></a>
+                </div>
+                <div class="insight-card" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="text-xl font-semibold text-primary mb-2">Bridging the Gap: Integrating Computer Vision into Edge Devices</h3>
+                    <p class="text-text-muted text-sm mb-3">A reflection on model quantization, compression, and deployment strategies for real-time CV applications.</p>
+                    <a href="https://www.sciencedirect.com/science/article/pii/S009784932400150X" target="_blank" class="text-primary hover:text-primary-dark text-sm font-medium flex items-center">Read More <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 border-t border-card">
+            <h2 class="section-heading text-4xl font-bold mb-10 text-text-light" data-aos="fade-right">Get In Touch</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                
+                <div class="space-y-6" data-aos="fade-right" data-aos-delay="100">
+                    <p class="text-xl text-text-muted">I'm currently seeking roles in AI/ML Engineering and Applied Research. Whether you have a job opportunity, a collaboration idea, or just want to chat, feel free to reach out!</p>
+
+                    <div class="space-y-4 pt-4">
+                        <div class="flex items-center text-lg">
+                            <i data-lucide="mail" class="w-6 h-6 text-primary mr-3"></i>
+                            <a href="mailto:modembhanu2007@gmail.com" class="hover:text-primary transition duration-300">modembhanu2007@gmail.com</a>
+                        </div>
+                        <div class="flex items-center text-lg">
+                            <i data-lucide="phone" class="w-6 h-6 text-primary mr-3"></i>
+                            <a href="tel:+919100626094" class="hover:text-primary transition duration-300">+91 91006 26094</a>
+                        </div>
+                        <div class="flex items-center text-lg">
+                            <i data-lucide="map-pin" class="w-6 h-6 text-primary mr-3"></i>
+                            <span class="text-text-light">Galiveedu, Rayachoty, Andhra Pradesh, India - 516267</span>
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-6 pt-6">
+                        <a href="https://www.linkedin.com/in/modem-bhanu-teja-281897352" target="_blank" class="social-icon">
+                            <i data-lucide="linkedin" class="w-6 h-6"></i>
+                        </a>
+                        <a href="https://github.com/bhanuteja2007" target="_blank" class="social-icon">
+                            <i data-lucide="github" class="w-6 h-6"></i>
+                        </a>
+                        <a href="https://twitter.com/ModemTeja67053" target="_blank" class="social-icon">
+                            <i data-lucide="twitter" class="w-6 h-6"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-card p-8 rounded-xl shadow-2xl" data-aos="fade-left" data-aos-delay="200">
+                    <h3 class="text-2xl font-semibold text-text-light mb-4">Send a Message</h3>
+                    <form id="contact-form" class="space-y-4"> 
+                        <div>
+                            <!-- Label visibility fix confirmed -->
+                            <label for="name" class="block text-sm font-medium text-text-light mb-1">Name</label>
+                            <input type="text" id="name" name="user_name" class="contact-input" placeholder="Your Name" required> 
+                        </div>
+                        <div>
+                            <!-- Label visibility fix confirmed -->
+                            <label for="email" class="block text-sm font-medium text-text-light mb-1">Email</label>
+                            <input type="email" id="email" name="user_email" class="contact-input" placeholder="Your Email" required>
+                        </div>
+                        <div>
+                            <!-- Label visibility fix confirmed -->
+                            <label for="message" class="block text-sm font-medium text-text-light mb-1">Message</label>
+                            <textarea id="message" name="message" rows="4" class="contact-input" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-4 py-3 bg-primary text-white font-medium rounded-lg transition duration-300 contact-submit-btn transform hover:scale-[1.02]">
+                            Send Message
+                        </button>
+                        <!-- Status note visibility fix confirmed -->
+                        <p id="form-status" class="text-xs text-text-light/70 pt-2 text-center">Note: This form is powered by EmailJS and does not require a backend.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-card mt-16 border-t border-primary-dark" data-aos="fade-up">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="text-center md:text-left text-sm text-text-muted">
+                    &copy; 2025 Bhanu Teja Modem. All rights reserved.
+                </div>
+                <div class="flex justify-center md:justify-end space-x-6 mt-4 md:mt-0">
+                    <a href="https://www.linkedin.com/in/modem-bhanu-teja-281897352" target="_blank" class="footer-social-icon">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://github.com/bhanuteja2007" target="_blank" class="footer-social-icon">
+                        <i data-lucide="github" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://twitter.com/ModemTeja67053" target="_blank" class="footer-social-icon">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                    <a href="mailto:modembhanu2007@gmail.com" class="footer-social-icon">
+                        <i data-lucide="mail" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Initialize AOS
+        AOS.init({
+            duration: 800, // Duration of animation
+            once: true,    // Whether animation should happen only once - true means only on initial load, false on every scroll
+        });
+
+
+        // Helper function for smooth scrolling to sections
+        const scrollToSection = (e) => {
+            const targetId = e.target.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                e.preventDefault();
+                const offset = document.getElementById('navbar').offsetHeight; // Get navbar height
+                window.scrollTo({
+                    top: targetElement.offsetTop - offset,
+                    behavior: 'smooth'
+                });
+            }
+        };
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', scrollToSection);
+        });
+
+        // Mobile Menu Toggle Logic
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = mobileMenuButton.querySelector('[data-lucide="menu"]');
+        const closeIcon = mobileMenuButton.querySelector('[data-lucide="x"]');
+
+        mobileMenuButton.addEventListener('click', () => {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+            menuIcon.classList.toggle('hidden');
+            closeIcon.classList.add('hidden'); // Ensure 'x' is hidden when menu closes
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            });
+        });
+
+                // 1. Initialize EmailJS with your Public Key (User ID: yDONCYf00_GqwNheL)
+        (function() {
+            emailjs.init("yDONCYf00_GqwNheL"); 
+        })();
+
+        // 2. Handle form submission
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const formStatus = document.getElementById('form-status');
+            formStatus.textContent = 'Sending message...';
+            formStatus.classList.remove('text-red-500', 'text-green-500', 'text-text-light/70');
+            formStatus.classList.add('text-primary');
+
+            // Your provided credentials
+            const serviceID = "service_l3wrtld";
+            // *** IMPORTANT: REPLACE THIS WITH YOUR ACTUAL EMAILJS TEMPLATE ID ***
+            const templateID = "template_example"; 
+
+            emailjs.sendForm(serviceID, templateID, this)
+                .then(() => {
+                    formStatus.textContent = 'Message sent successfully! I will be in touch soon. 😊';
+                    formStatus.classList.remove('text-primary');
+                    formStatus.classList.add('text-green-500');
+                    document.getElementById('contact-form').reset(); // Clear the form
+                }, (err) => {
+                    formStatus.textContent = 'Failed to send the message. Please check the console or email me directly! 🙁';
+                    formStatus.classList.remove('text-primary');
+                    formStatus.classList.add('text-red-500');
+                    console.error('EmailJS Error:', err);
+                });
+        });
+
+    </script>
+</body>
+</html>
